@@ -36,7 +36,7 @@ required data explicitly. (You can access this data on your Jenkinsfile by using
 ```
 githubNotify account: 'raul-arabaolaza', context: 'Final Test', credentialsId: 'raul-github',
     description: 'This is an example', repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'
-    , status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'
+    , status: 'SUCCESS', targetUrl: 'https://my-jenkins-instance.com'
 ```
 
 # Example with data inference and default values
