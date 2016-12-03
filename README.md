@@ -10,11 +10,11 @@ The available parameters are:
 * _credentialsId_: The id of the github's credentials to use, must be of type UsernameAndPassword
 * _status_: The status to send, one of SUCCESS, FAILURE, ERROR or PENDING
 * _description_: The description that will appear at the notification
-* _context_: The notifications context, GH uses the context to diferentiate notifications (optiona, jenkins/githubnotify is used by default)
+* _context_: The notifications context, GH uses the context to diferentiate notifications (optional, jenkins/githubnotify is used by default)
 * _sha_: The sha that identifies the commit to notify status
 * _repo_: The repo that ows the commit we want to notify
 * _account_: The account that owns the repository;
-* _gitApiUrl_: GitHub's Enterprise instance API url (optional, https://api.github.com is used by default)
+* _gitApiUrl_: GitHub Enterprise instance API URL (optional, https://api.github.com is used by default)
 * _targetUrl_: The targetUrl for the notification
 
 # Inferring parameter values
