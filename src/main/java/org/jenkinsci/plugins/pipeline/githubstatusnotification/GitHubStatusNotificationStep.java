@@ -409,7 +409,7 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         }
 
         private String tryToInferCredentialsId() {
-            String credentialsID = getSource().getCredentialsId();
+            String credentialsID = getSource().getScanCredentialsId();
             if (credentialsID != null) {
                 return credentialsID;
             } else {
