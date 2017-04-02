@@ -1,8 +1,13 @@
 package org.jenkinsci.plugins.pipeline.githubstatusnotification;
 
+import com.cloudbees.hudson.plugins.folder.Folder;
+import com.cloudbees.hudson.plugins.folder.properties.FolderCredentialsProvider;
 import com.cloudbees.plugins.credentials.Credentials;
+import com.cloudbees.plugins.credentials.CredentialsProvider;
 import com.cloudbees.plugins.credentials.CredentialsScope;
+import com.cloudbees.plugins.credentials.CredentialsStore;
 import com.cloudbees.plugins.credentials.SystemCredentialsProvider;
+import com.cloudbees.plugins.credentials.domains.Domain;
 import hudson.model.Result;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
@@ -291,6 +296,36 @@ public class GitHubNotificationPipelineStepTest {
     }
 
     @Test
+    public void buildWitFolderCredentials() throws Exception {
+
+        GitHub gh = PowerMockito.mock(GitHub.class);
+        PowerMockito.mockStatic(GitHub.class);
+        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
+        GHRepository repo = PowerMockito.mock(GHRepository.class);
+        GHUser user = PowerMockito.mock(GHUser.class);
+        GHCommit commit = PowerMockito.mock(GHCommit.class);
+        PowerMockito.when(user.getRepository(anyString())).thenReturn(repo);
+        PowerMockito.when(gh.getUser(anyString())).thenReturn(user);
+        PowerMockito.when((repo.getCommit(anyString()))).thenReturn(commit);
+
+        Folder f = jenkins.jenkins.createProject(Folder.class, "folder" + jenkins.jenkins.getItems().size());
+        CredentialsStore folderStore = getFolderStore(f);
+        folderStore.addCredentials(Domain.global(),
+                new DummyCredentials(CredentialsScope.GLOBAL, "user", "password"));
+
+        WorkflowJob p = f.createProject(WorkflowJob.class, "p");
+        p.setDefinition(new CpsFlowDefinition(
+                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
+                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                        "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
+        ));
+        WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
+        jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
+    }
+
+    @Test
     public void buildEnterprise() throws Exception {
 
         GitHub gh = PowerMockito.mock(GitHub.class);
@@ -317,5 +352,18 @@ public class GitHubNotificationPipelineStepTest {
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
     }
+
+    private CredentialsStore getFolderStore(Folder f) {
+        Iterable<CredentialsStore> stores = CredentialsProvider.lookupStores(f);
+        CredentialsStore folderStore = null;
+        for (CredentialsStore s : stores) {
+            if (s.getProvider() instanceof FolderCredentialsProvider && s.getContext() == f) {
+                folderStore = s;
+                break;
+            }
+        }
+        return folderStore;
+    }
+
 
 }
