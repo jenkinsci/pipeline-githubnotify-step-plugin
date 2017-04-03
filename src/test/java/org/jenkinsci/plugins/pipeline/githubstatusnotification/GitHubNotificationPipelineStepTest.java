@@ -41,8 +41,8 @@ public class GitHubNotificationPipelineStepTest {
     public void buildWithNullCredentialsIDMustFail() throws Exception {
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "description: 'PCT Is OK', repo: 'acceptance-test-harness', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "description: 'All tests are OK', repo: 'acceptance-test-harness', " +
                         "sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', status: 'SUCCESS', " +
                         "targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -56,8 +56,8 @@ public class GitHubNotificationPipelineStepTest {
     public void buildWithNotExistingCredentialsMustFail() throws Exception {
                         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
                 p.setDefinition(new CpsFlowDefinition(
-                        "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                                "credentialsId: 'notExisting', description: 'PCT Is OK', " +
+                        "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                                "credentialsId: 'notExisting', description: 'All tests are OK', " +
                                 "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                                 "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
                 ));
@@ -74,8 +74,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-        "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+        "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+        "credentialsId: 'dummy', description: 'All tests are OK', " +
         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -92,8 +92,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'"
         ));
@@ -119,8 +119,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -147,8 +147,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -175,8 +175,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness',  " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -203,8 +203,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify  context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
+                "githubNotify  context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
                         "repo: 'acceptance-test-harness',  " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -231,8 +231,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify  account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
+                "githubNotify  account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
@@ -258,8 +258,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify  account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "description: 'PCT Is OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
+                "githubNotify  account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', repo: 'acceptance-test-harness'"
         ));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
@@ -286,8 +286,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -296,7 +296,7 @@ public class GitHubNotificationPipelineStepTest {
     }
 
     @Test
-    public void buildWitFolderCredentials() throws Exception {
+    public void buildWithFolderCredentials() throws Exception {
 
         GitHub gh = PowerMockito.mock(GitHub.class);
         PowerMockito.mockStatic(GitHub.class);
@@ -316,8 +316,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = f.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
@@ -344,8 +344,8 @@ public class GitHubNotificationPipelineStepTest {
 
         WorkflowJob p = jenkins.createProject(WorkflowJob.class, "p");
         p.setDefinition(new CpsFlowDefinition(
-                "githubNotify account: 'raul-arabaolaza', context: 'PCT Results', " +
-                        "credentialsId: 'dummy', description: 'PCT Is OK', " +
+                "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
+                        "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'"
         ));
