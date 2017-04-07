@@ -33,6 +33,7 @@ import com.cloudbees.plugins.credentials.common.UsernamePasswordCredentials;
 import com.cloudbees.plugins.credentials.domains.DomainRequirement;
 import hudson.Extension;
 import hudson.Util;
+import hudson.model.Item;
 import hudson.model.ItemGroup;
 import hudson.model.Run;
 import hudson.security.ACL;
@@ -55,6 +56,7 @@ import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHCommitState;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
@@ -206,19 +208,19 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         return this.targetUrl;
     }
 
-    private static <T extends Credentials> T getCredentials(@Nonnull Class<T> type, @Nonnull String credentialsId) {
+    private static <T extends Credentials> T getCredentials(@Nonnull Class<T> type, @Nonnull String credentialsId, Item context) {
         return CredentialsMatchers.firstOrNull(lookupCredentials(
-                type, (ItemGroup) Jenkins.getInstance(), ACL.SYSTEM,
+                type, context, ACL.SYSTEM,
                 Collections.<DomainRequirement>emptyList()), CredentialsMatchers.allOf(
                 CredentialsMatchers.withId(credentialsId),
                 CredentialsMatchers.instanceOf(type)));
     }
 
-    private static GitHub getGitHubIfValid(String credentialsId, String gitApiUrl) throws IOException {
+    private static GitHub getGitHubIfValid(String credentialsId, String gitApiUrl, Item context) throws IOException {
         if (credentialsId == null || credentialsId.isEmpty()) {
             throw new IllegalArgumentException(NULL_CREDENTIALS_ID);
         }
-        UsernamePasswordCredentials credentials = getCredentials(UsernamePasswordCredentials.class, credentialsId);
+        UsernamePasswordCredentials credentials = getCredentials(UsernamePasswordCredentials.class, credentialsId, context);
         if (credentials == null) {
             throw new IllegalArgumentException(CREDENTIALS_ID_NOT_EXISTS);
         }
@@ -235,8 +237,8 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         }
     }
 
-    private static GHRepository getRepoIfValid(String credentialsId, String gitApiUrl, String account, String repo) throws IOException {
-        GitHub github = getGitHubIfValid(credentialsId, gitApiUrl);
+    private static GHRepository getRepoIfValid(String credentialsId, String gitApiUrl, String account, String repo, Item context) throws IOException {
+        GitHub github = getGitHubIfValid(credentialsId, gitApiUrl, context);
         GHRepository repository = github.getUser(account).getRepository(repo);
         if (repository == null) {
             throw new IllegalArgumentException(INVALID_REPO);
@@ -244,8 +246,8 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         return repository;
     }
 
-    private static GHCommit getCommitIfValid(String credentialsId, String gitApiUrl, String account, String repo, String sha) throws IOException {
-        GHRepository repository = getRepoIfValid(credentialsId, gitApiUrl, account, repo);
+    private static GHCommit getCommitIfValid(String credentialsId, String gitApiUrl, String account, String repo, String sha, Item context) throws IOException {
+        GHRepository repository = getRepoIfValid(credentialsId, gitApiUrl, account, repo, context);
         GHCommit commit = repository.getCommit(sha);
         if (commit == null) {
             throw new IllegalArgumentException(INVALID_COMMIT);
@@ -275,9 +277,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             return "Notifies GitHub of the status of a Pull Request";
         }
 
-        public ListBoxModel doFillCredentialsIdItems() {
+        public ListBoxModel doFillCredentialsIdItems(@AncestorInPath Item project) {
             AbstractIdCredentialsListBoxModel result = new StandardListBoxModel();
-            List<UsernamePasswordCredentials> credentialsList = CredentialsProvider.lookupCredentials(UsernamePasswordCredentials.class, (ItemGroup) Jenkins.getInstance(), ACL.SYSTEM);
+            List<UsernamePasswordCredentials> credentialsList = CredentialsProvider.lookupCredentials(UsernamePasswordCredentials.class, project, ACL.SYSTEM);
             for (UsernamePasswordCredentials credential : credentialsList) {
                 result = result.with((IdCredentials) credential);
             }
@@ -292,9 +294,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             return list;
         }
 
-        public FormValidation doTestConnection(@QueryParameter ("credentialsId") final String credentialsId, @QueryParameter ("gitApiUrl") final String gitApiUrl) {
+        public FormValidation doTestConnection(@QueryParameter ("credentialsId") final String credentialsId, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
             try {
-                getGitHubIfValid(credentialsId, gitApiUrl);
+                getGitHubIfValid(credentialsId, gitApiUrl, context);
                 return FormValidation.ok("Success");
             } catch (Exception e) {
                 return FormValidation.error(e.getMessage());
@@ -302,9 +304,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         }
 
         public FormValidation doCheckRepo(@QueryParameter ("credentialsId") final String credentialsId,
-                                          @QueryParameter ("repo") final String repo, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl) {
+                                          @QueryParameter ("repo") final String repo, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
             try {
-                getRepoIfValid(credentialsId, gitApiUrl, account, repo);
+                getRepoIfValid(credentialsId, gitApiUrl, account, repo, context);
                 return FormValidation.ok("Success");
             } catch (Exception e) {
                 return FormValidation.error(e.getMessage());
@@ -312,9 +314,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         }
 
         public FormValidation doCheckSha(@QueryParameter ("credentialsId") final String credentialsId, @QueryParameter ("repo") final String repo,
-                                         @QueryParameter ("sha") final String sha, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl) {
+                                         @QueryParameter ("sha") final String sha, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
             try {
-                getCommitIfValid(credentialsId, gitApiUrl, account, repo, sha);
+                getCommitIfValid(credentialsId, gitApiUrl, account, repo, sha, context);
                 return FormValidation.ok("Commit seems valid");
 
             } catch (Exception e) {
@@ -341,7 +343,7 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             String credentialsId = getCredentialsId();
             String repo = getRepo();
             String account = getAccount();
-            GHRepository repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo);
+            GHRepository repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo, run.getParent());
             String sha1 = getSha1();
             GHCommit commit = null;
             try {
