@@ -20,17 +20,20 @@ import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
+import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
+import java.net.Proxy;
 
 import static org.mockito.Matchers.anyString;
 
 @RunWith (PowerMockRunner.class)
-@PrepareForTest ({GitHub.class})
+@PrepareForTest ({GitHubStatusNotificationStep.class})
 @PowerMockIgnore ({"javax.crypto.*" })
 public class GitHubNotificationPipelineStepTest {
 
@@ -105,9 +108,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithWrongRepoMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHUser user = PowerMockito.mock(GHUser.class);
         PowerMockito.when(user.getRepository(anyString())).thenReturn(null);
@@ -132,9 +138,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithWrongCommitMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -160,9 +169,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithInferWithoutCommitMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -188,9 +200,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithInferWithoutAccountMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -216,9 +231,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithInferWithoutRepoMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -243,9 +261,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithInferWithoutCredentialsMustFail() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -270,9 +291,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void build() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -298,9 +322,12 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildWithFolderCredentials() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connect("user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);
@@ -328,9 +355,13 @@ public class GitHubNotificationPipelineStepTest {
     @Test
     public void buildEnterprise() throws Exception {
 
+        GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
+        PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
+        PowerMockito.when(ghb.withOAuthToken(anyString(), anyString())).thenReturn(ghb);
+        PowerMockito.when(ghb.withEndpoint("https://api.example.com")).thenReturn(ghb);
+        PowerMockito.whenNew(GitHubBuilder.class).withNoArguments().thenReturn(ghb);
         GitHub gh = PowerMockito.mock(GitHub.class);
-        PowerMockito.mockStatic(GitHub.class);
-        PowerMockito.when(GitHub.connectToEnterprise("https://api.example.com","user", "password")).thenReturn(gh);
+        PowerMockito.when(ghb.build()).thenReturn(gh);
         PowerMockito.when(gh.isCredentialValid()).thenReturn(true);
         GHRepository repo = PowerMockito.mock(GHRepository.class);
         GHUser user = PowerMockito.mock(GHUser.class);

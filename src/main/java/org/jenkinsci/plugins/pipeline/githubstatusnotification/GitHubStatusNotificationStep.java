@@ -56,6 +56,7 @@ import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHCommitState;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -64,6 +65,7 @@ import org.kohsuke.stapler.QueryParameter;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.Proxy;
 import java.util.Collections;
 import java.util.List;
 
@@ -216,6 +218,24 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
                 CredentialsMatchers.instanceOf(type)));
     }
 
+    /**
+     * Uses proxy if configured on pluginManager/advanced page
+     *
+     * @param host GitHub's hostname to build proxy to
+     *
+     * @return proxy to use it in connector. Should not be null as it can lead to unexpected behaviour
+     */
+    @Nonnull
+    private static Proxy getProxy(@Nonnull String host) {
+        Jenkins jenkins = Jenkins.getActiveInstance();
+
+        if (jenkins.proxy == null) {
+            return Proxy.NO_PROXY;
+        } else {
+            return jenkins.proxy.createProxy(host);
+        }
+    }
+
     private static GitHub getGitHubIfValid(String credentialsId, String gitApiUrl, Item context) throws IOException {
         if (credentialsId == null || credentialsId.isEmpty()) {
             throw new IllegalArgumentException(NULL_CREDENTIALS_ID);
@@ -224,12 +244,19 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         if (credentials == null) {
             throw new IllegalArgumentException(CREDENTIALS_ID_NOT_EXISTS);
         }
-        GitHub github = null;
+        GitHubBuilder githubBuilder = new GitHubBuilder();
+
+        githubBuilder.withOAuthToken(credentials.getPassword().getPlainText(), credentials.getUsername());
+
         if (gitApiUrl == null || gitApiUrl.isEmpty()) {
-            github = GitHub.connect(credentials.getUsername(), credentials.getPassword().getPlainText());
+            githubBuilder = githubBuilder.withProxy(getProxy("https://api.github.com"));
         } else {
-            github = GitHub.connectToEnterprise(gitApiUrl, credentials.getUsername(), credentials.getPassword().getPlainText());
+            githubBuilder = githubBuilder.withEndpoint(gitApiUrl);
+            githubBuilder = githubBuilder.withProxy(getProxy(gitApiUrl));
         }
+
+        GitHub github = githubBuilder.build();
+
         if (github.isCredentialValid()) {
             return github;
         } else {
