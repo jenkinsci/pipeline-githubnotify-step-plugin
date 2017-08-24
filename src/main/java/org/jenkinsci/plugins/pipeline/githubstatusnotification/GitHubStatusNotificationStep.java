@@ -66,6 +66,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.Proxy;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -249,10 +250,12 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         githubBuilder.withOAuthToken(credentials.getPassword().getPlainText(), credentials.getUsername());
 
         if (gitApiUrl == null || gitApiUrl.isEmpty()) {
-            githubBuilder = githubBuilder.withProxy(getProxy("https://api.github.com"));
+            githubBuilder = githubBuilder.withProxy(getProxy("api.github.com"));
         } else {
             githubBuilder = githubBuilder.withEndpoint(gitApiUrl);
-            githubBuilder = githubBuilder.withProxy(getProxy(gitApiUrl));
+
+            URL url = new URL(gitApiUrl);
+            githubBuilder = githubBuilder.withProxy(getProxy(url.getHost()));
         }
 
         GitHub github = githubBuilder.build();
