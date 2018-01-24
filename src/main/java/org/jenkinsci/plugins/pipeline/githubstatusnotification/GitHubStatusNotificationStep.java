@@ -80,9 +80,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
 
     public static final String CREDENTIALS_ID_NOT_EXISTS = "The credentialsId does not seem to exist, please check it";
     public static final String NULL_CREDENTIALS_ID = "Credentials ID is null or empty";
-    public static final String CREDENTIALS_LOGIN_INVALID = "The suplied credentials are invalid to login";
-    public static final String INVALID_REPO = "The specified repository does not exists for the specified account";
-    public static final String INVALID_COMMIT = "The specified commit does not exists in the specified repository";
+    public static final String CREDENTIALS_LOGIN_INVALID = "The supplied credentials are invalid to login";
+    public static final String INVALID_REPO = "The specified repository does not exist for the specified account";
+    public static final String INVALID_COMMIT = "The specified commit does not exist in the specified repository";
 
     /**
      * The commit status to send with the notification
