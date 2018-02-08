@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>2.9</version>
+        <version>3.4</version>
         <relativePath />
     </parent>
 
@@ -18,6 +18,7 @@
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Githubnotify+Step+Plugin</url>
 
     <properties>
+        <java.level>8</java.level>
         <jenkins.version>1.642.3</jenkins.version>
     </properties>
 
@@ -46,18 +47,13 @@
     <dependencies>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-step-api</artifactId>
-            <version>1.15</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-api</artifactId>
+            <artifactId>workflow-aggregator</artifactId>
             <version>1.15</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>github-api</artifactId>
-            <version>1.77</version>
+            <version>1.90</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -73,24 +69,6 @@
           <groupId>org.jenkins-ci.plugins</groupId>
           <artifactId>display-url-api</artifactId>
           <version>0.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps</artifactId>
-            <version>1.15</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-basic-steps</artifactId>
-            <version>1.15</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-job</artifactId>
-            <version>2.1</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
@@ -116,6 +94,13 @@
             <artifactId>powermock-module-junit4</artifactId>
             <version>1.6.4</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Requiered by upper bounds checks -->
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>git</artifactId>
+            <version>2.4.0</version>
         </dependency>
     </dependencies>
 </project>
