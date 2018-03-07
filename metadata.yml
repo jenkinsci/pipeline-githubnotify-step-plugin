@@ -1,0 +1,14 @@
+---
+ath:
+  athRevision: acceptance-test-harness-1.59
+  jenkins: 2.89.4
+  failFast: true
+  rerunFailingTestsCount: 2
+  useLocalSnapshots: true
+  browsers:
+    - firefox
+    - chrome
+  tests:
+    - AntPluginTest
+  categories:
+    - org.jenkinsci.test.acceptance.junit.SmokeTest
