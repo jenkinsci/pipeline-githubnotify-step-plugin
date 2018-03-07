@@ -9,7 +9,7 @@ node("linux") {
                 "PATH+MAVEN=${tool 'mvn'}/bin"]
       withEnv(mavenEnv) {
         dir("test") {
-            sh "mvn dependency:copy -Dartifact=org.jenkins-ci.main:jenkins-war:2.110:war -DoutputDirectory=. -Dmdep.stripVersion=true -Dmaven.repo.remote=https://repo.maven.apache.org/maven2/,https://repo.azure.jenkins.io/public/"
+            sh "mvn dependency:copy -Dartifact=org.jenkins-ci.main:jenkins-war:2.110:war -DoutputDirectory=. -Dmdep.stripVersion=true -Dmaven.repo.remote=https://repo.azure.jenkins.io/public/"
         }
         def settingsXml = "${pwd tmp: true}/settings-azure.xml"
         writeFile file: settingsXml, text: libraryResource('settings-azure.xml')
