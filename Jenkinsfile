@@ -4,11 +4,11 @@ node("linux") {
     
     dir("ath") {
       checkout scm
-      List<String> env = [
+      List<String> mavenEnv = [
                 "JAVA_HOME=${tool 'jdk8'}",
                 'PATH+JAVA=${JAVA_HOME}/bin',
                 "PATH+MAVEN=${tool 'mvn'}/bin"]
-      withEnv(env) {
+      withEnv(mavenEnv) {
         def settingsXml = "${pwd tmp: true}/settings-azure.xml"
         writeFile file: settingsXml, text: libraryResource('settings-azure.xml')
         sh "mvn clean install -DskipTests -s $settingsXml"
