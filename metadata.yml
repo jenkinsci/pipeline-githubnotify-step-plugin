@@ -1,7 +1,7 @@
 ---
 ath:
   athRevision: acceptance-test-harness-1.59
-  jenkins: "latest"
+  jenkins: 2.110
   failFast: true
   rerunFailingTestsCount: 2
   useLocalSnapshots: true
