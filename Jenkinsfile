@@ -9,7 +9,9 @@ node("linux") {
                 'PATH+JAVA=${JAVA_HOME}/bin',
                 "PATH+MAVEN=${tool 'mvn'}/bin"]
       withEnv(env) {
-        sh "mvn clean install -DskipTests"
+        def settingsXml = "${pwd tmp: true}/settings-azure.xml"
+        writeFile file: settingsXml, text: libraryResource('settings-azure.xml')
+        sh "mvn clean install -DskipTests -s $settingsXml"
       }
       dir("target") {
        stash includes: '*.hpi', name: 'snapshots'
