@@ -8,5 +8,5 @@ ath:
   browsers:
     - firefox
     - chrome
-  categories:
-    - org.jenkinsci.test.acceptance.junit.SmokeTest
+  tests:
+    - AntPluginTest
