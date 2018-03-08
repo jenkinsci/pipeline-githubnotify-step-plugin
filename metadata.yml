@@ -1,6 +1,6 @@
 ---
 ath:
-  athRevision: acceptance-test-harness-1.59
+  athRevision: "master"
   jenkins: "2.110"
   failFast: true
   rerunFailingTestsCount: 2
@@ -8,7 +8,5 @@ ath:
   browsers:
     - firefox
     - chrome
-  tests:
-    - AntPluginTest
   categories:
     - org.jenkinsci.test.acceptance.junit.SmokeTest
