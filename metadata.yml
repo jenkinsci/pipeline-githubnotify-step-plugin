@@ -8,5 +8,3 @@ ath:
   browsers:
     - firefox
     - chrome
-  tests:
-    - AntPluginTest
