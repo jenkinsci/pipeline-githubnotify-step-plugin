@@ -19,6 +19,6 @@ node("linux") {
       }
     
       env.RUN_ATH_LOCAL_PLUGINS_STASH_NAME="snapshots"
-      runATH(metadataFile:"metadata.yml", athRevision: "master")
+      runATH(metadataFile:"essentials.yml", athRevision: "master")
     }
 }
