@@ -1,5 +1,3 @@
-@Library('pipeline-library@runATH-step') _
-
 buildPlugin()
 
 node("linux") {
