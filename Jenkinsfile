@@ -1,6 +1,7 @@
 node("docker&&highmem") {
     dir("ath-githubnotify") {
-      deleteDir()  
+      deleteDir() 
+      checkout scm
       runATH(metadataFile:"metadata.yml", athRevision: "master")
     }
 }
