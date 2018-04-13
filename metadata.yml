@@ -9,4 +9,4 @@ ath:
     - firefox
     - chrome
   categories:
-    - SmokesTestCategory
+    - GitPluginTest
