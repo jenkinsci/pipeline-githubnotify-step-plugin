@@ -8,5 +8,5 @@ ath:
   browsers:
     - firefox
     - chrome
-  tests:
-    - GitPluginTest
+  categories:
+    - SmokesTestCategory
