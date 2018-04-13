@@ -1,7 +1,7 @@
 ---
 ath:
   athRevision: "master"
-  jenkins: "latest"
+  jenkins: "2.110"
   failFast: false
   rerunFailingTestsCount: 1
   useLocalSnapshots: false
