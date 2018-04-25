@@ -3,5 +3,6 @@ node("docker&&highmem") {
       deleteDir() 
       checkout scm
       runATH(metadataFile:"metadata.yml", athRevision: "master")
+      runPCT(metadataFile:"metadata.yml")  
     }
 }
