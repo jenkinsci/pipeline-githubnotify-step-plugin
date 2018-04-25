@@ -1,9 +1,5 @@
 ---
 ath:
-  athRevision: "master"
-  jenkins: "2.110"
-  failFast: false
-  rerunFailingTestsCount: 1
   useLocalSnapshots: false
   browsers:
     - firefox
