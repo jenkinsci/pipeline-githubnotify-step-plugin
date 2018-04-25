@@ -4,8 +4,6 @@ ath:
   browsers:
     - firefox
     - chrome
-  categories:
-    - GitPluginTest
 pct:
   useLocalSnapshots: false
   plugins:
