@@ -7,7 +7,7 @@ branches["ATH"] = {
             checkoutGit = pwd(tmp:true) + "/athgit"
             dir(checkoutGit) {
                 git "https://github.com/jenkinsci/git-plugin.git"
-                infra.runMaven("clean package -DskipTests")
+                infra.runMaven(["clean", "package", "-DskipTests"])
                 dir("target") {
                     stash name: "localPlugins", includes: "*.hpi"
                 }
