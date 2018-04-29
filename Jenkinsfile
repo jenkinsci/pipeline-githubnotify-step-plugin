@@ -11,7 +11,6 @@ branches["ATH"] = {
                 dir("target") {
                     stash name: "localPlugins", includes: "*.hpi"
                 }
-                infra.runMaven(["clean"])
             }
         }
         def metadataPath = checkoutGit + "/essentials.yml"
