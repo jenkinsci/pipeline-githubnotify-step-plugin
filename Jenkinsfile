@@ -2,6 +2,8 @@ def branches = [:]
 
 branches["ATH"] = {
     node("docker && highmem") {
+        sh "id -u"
+        sh "id -g"
         def checkoutGit
         stage("ATH: Checkout") {
             checkoutGit = pwd(tmp:true) + "/athgit"
