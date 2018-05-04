@@ -1,9 +1,8 @@
+@Library("pipeline-library@INFRA-1607") _
 def branches = [:]
 
 branches["ATH"] = {
     node("docker && highmem") {
-        sh "id -u"
-        sh "id -g"
         def checkoutGit
         stage("ATH: Checkout") {
             checkoutGit = pwd(tmp:true) + "/athgit"
@@ -20,28 +19,6 @@ branches["ATH"] = {
             def athFolder=pwd(tmp:true) + "/ath"
             dir(athFolder) {
                 runATH metadataFile: metadataPath
-            }
-        }
-    }
-}
-branches["PCT"] = {
-    node("docker && highmem") {
-        def metadataPath
-        env.RUN_PCT_LOCAL_PLUGIN_SOURCES_STASH_NAME = "localPluginsPCT"
-        stage("PCT: Checkout") {
-            def checkoutGit = pwd(tmp:true) + "/pctgit"
-            dir(checkoutGit) {
-                dir("git") {
-                    checkout scm
-                }
-                stash name: "localPluginsPCT", useDefaultExcludes: false
-            }
-            metadataPath = checkoutGit + "/git/essentials.yml"
-        }
-        stage("Run PCT") {
-            def pctFolder = pwd(tmp:true) + "/pct"
-            dir(pctFolder) {
-                runPCT metadataFile: metadataPath
             }
         }
     }
