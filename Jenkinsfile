@@ -1,4 +1,3 @@
-@Library("pipeline-library@INFRA-1607") _
 def branches = [:]
 
 branches["ATH"] = {
