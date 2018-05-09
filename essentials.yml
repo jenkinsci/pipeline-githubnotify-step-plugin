@@ -1,8 +1,6 @@
 ---
 ath:
   jenkins: "2.121-rc15727.3b61b96119b9"
-  athRevision: "JENKINS-50790-3"
-  athUrl: "https://github.com/raul-arabaolaza/acceptance-test-harness.git"
   tests:
     - "GitPluginTest"
     - "GitUserContentTest"
