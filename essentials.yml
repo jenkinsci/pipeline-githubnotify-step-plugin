@@ -10,3 +10,30 @@ ath:
 pct:
   plugins:
     - "git"
+    - "blueocean-git-pipeline"
+    - "blueocean-pipeline-api-impl"
+    - "blueocean-github-pipeline"
+    - "blueocean-events"
+    - "blueocean-bitbucket-pipeline"
+    - "github-branch-source"
+    - "cloudbees-bitbucket-branch-source"
+    - "blueocean-autofavorite"
+    - "github"
+    - "bitbucket"
+    - "gitlab-plugin"
+  jth:
+    version: 2.38
+    passCustomJenkinsWAR: true
+packaging:
+  config:
+    bundle:
+      groupId: "org.jenkins-ci.main"
+      artifactId: "jenkins-core-it"
+      vendor: "Jenkins project"
+      title: "Jenkins Integration Tests WAR"
+      description: "Jenkins WAR for integration tests"
+    war:
+      groupId: "org.jenkins-ci.main"
+      artifactId: "jenkins-war"
+      source:
+        version: "2.107.2"
