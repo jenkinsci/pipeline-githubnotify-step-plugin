@@ -1,5 +1,6 @@
 ---
 ath:
+  useLocalSnapshots: false
   jenkins: "2.121-rc15727.3b61b96119b9"
   tests:
     - "GitPluginTest"
@@ -8,6 +9,7 @@ ath:
     - "WorkflowPluginTest#hello_world_from_git"
     - "WorkflowPluginTest#testSharedLibraryFromGithub"
 pct:
+  useLocalSnapshots: false
   plugins:
     - "git"
     - "blueocean-git-pipeline"
