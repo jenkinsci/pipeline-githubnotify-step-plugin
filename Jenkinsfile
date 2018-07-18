@@ -1,1 +1,2 @@
+println scm
 buildPlugin()
