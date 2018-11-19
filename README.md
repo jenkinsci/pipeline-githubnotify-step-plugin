@@ -11,7 +11,7 @@ The available parameters are:
 and contain the password or a personal access token. Which one of them depends on the server configuration
 * _status_: The status to send, one of SUCCESS, FAILURE, ERROR or PENDING
 * _description_: The description that will appear at the notification
-* _context_: The notifications context, GH uses the context to diferentiate notifications (optional, jenkins/githubnotify is used by default)
+* _context_: The notifications context, GH uses the context to differentiate notifications (optional, jenkins/githubnotify is used by default)
 * _sha_: The sha that identifies the commit to notify status
 * _repo_: The repo that ows the commit we want to notify
 * _account_: The account that owns the repository;

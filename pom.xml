@@ -109,7 +109,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Requiered by upper bounds checks -->
+        <!-- Required by upper bounds checks -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>git</artifactId>
