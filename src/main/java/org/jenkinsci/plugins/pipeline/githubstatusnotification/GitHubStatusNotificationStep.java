@@ -70,6 +70,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials;
+import hudson.Functions;
+import hudson.model.TaskListener;
 
 /**
  * A pipeline step that allows to send a commit status to GitHub.
@@ -361,6 +363,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         @Inject
         private transient GitHubStatusNotificationStep step;
 
+        @Inject
+        private transient TaskListener listener;
+
         @StepContextParameter
         private transient Run run;
 
@@ -372,11 +377,12 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             String account = getAccount();
             GHRepository repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo, run.getParent());
             String sha1 = getSha1();
-            GHCommit commit = null;
+            GHCommit commit;
             try {
                 commit = repository.getCommit(sha1);
             } catch (IOException ex) {
-                throw new IllegalArgumentException(INVALID_COMMIT, ex);
+                listener.error(INVALID_COMMIT).print(Functions.printThrowable(ex)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                return null;
             }
             repository.createCommitStatus(commit.getSHA1(),
                     step.getStatus(), targetUrl, step.getDescription(), step.getContext());
