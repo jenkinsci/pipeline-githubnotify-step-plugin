@@ -30,10 +30,10 @@ THE SOFTWARE.
         <f:textbox />
     </f:entry>
     <f:entry field="repo" title="${%repository}">
-        <f:textbox />
+        <f:textbox checkMethod="post" />
     </f:entry>
     <f:entry field="sha" title="${%sha}">
-        <f:textbox />
+        <f:textbox checkMethod="post" />
     </f:entry>
     <f:entry field="context" title="${%context}">
         <f:textbox />
