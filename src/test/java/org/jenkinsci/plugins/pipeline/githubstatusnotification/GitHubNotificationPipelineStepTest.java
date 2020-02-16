@@ -47,8 +47,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "description: 'All tests are OK', repo: 'acceptance-test-harness', " +
                         "sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', status: 'SUCCESS', " +
-                        "targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_DATA, b1);
@@ -62,8 +62,8 @@ public class GitHubNotificationPipelineStepTest {
                         "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                                 "credentialsId: 'notExisting', description: 'All tests are OK', " +
                                 "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                                "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-                ));
+                                "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                        true));
                 WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
                 jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
                 jenkins.assertLogContains(GitHubStatusNotificationStep.CREDENTIALS_ID_NOT_EXISTS, b1);
@@ -80,8 +80,8 @@ public class GitHubNotificationPipelineStepTest {
         "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
         "credentialsId: 'dummy', description: 'All tests are OK', " +
         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+        true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.CREDENTIALS_LOGIN_INVALID, b1);
@@ -98,8 +98,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.CREDENTIALS_LOGIN_INVALID, b1);
@@ -128,8 +128,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.INVALID_REPO, b1);
@@ -159,8 +159,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.INVALID_COMMIT, b1);
@@ -190,8 +190,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness',  " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_COMMIT, b1);
@@ -221,8 +221,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify  context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
                         "repo: 'acceptance-test-harness',  " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_DATA, b1);
@@ -251,8 +251,8 @@ public class GitHubNotificationPipelineStepTest {
         p.setDefinition(new CpsFlowDefinition(
                 "githubNotify  account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_DATA, b1);
@@ -281,8 +281,8 @@ public class GitHubNotificationPipelineStepTest {
         p.setDefinition(new CpsFlowDefinition(
                 "githubNotify  account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "description: 'All tests are OK', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487'," +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', repo: 'acceptance-test-harness'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', repo: 'acceptance-test-harness'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_DATA, b1);
@@ -313,8 +313,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
     }
@@ -346,8 +346,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
     }
@@ -378,8 +378,8 @@ public class GitHubNotificationPipelineStepTest {
                 "githubNotify account: 'raul-arabaolaza', context: 'ATH Results', " +
                         "credentialsId: 'dummy', description: 'All tests are OK', " +
                         "repo: 'acceptance-test-harness', sha: '0b5936eb903d439ac0c0bf84940d73128d5e9487', " +
-                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'"
-        ));
+                        "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com', gitApiUrl:'https://api.example.com'",
+                true));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
     }
