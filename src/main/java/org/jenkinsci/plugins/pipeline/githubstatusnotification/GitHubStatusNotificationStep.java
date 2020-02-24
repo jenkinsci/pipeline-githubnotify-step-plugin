@@ -61,6 +61,7 @@ import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -308,6 +309,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
 
         public ListBoxModel doFillCredentialsIdItems(@AncestorInPath Item project) {
             AbstractIdCredentialsListBoxModel result = new StandardListBoxModel();
+            if (!project.hasPermission(Item.CONFIGURE)) {
+                return result;
+            }
             List<UsernamePasswordCredentials> credentialsList = CredentialsProvider.lookupCredentials(UsernamePasswordCredentials.class, project, ACL.SYSTEM);
             for (UsernamePasswordCredentials credential : credentialsList) {
                 result = result.with((IdCredentials) credential);
@@ -323,7 +327,9 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             return list;
         }
 
+        @RequirePOST
         public FormValidation doTestConnection(@QueryParameter ("credentialsId") final String credentialsId, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
+            context.checkPermission(Item.CONFIGURE);
             try {
                 getGitHubIfValid(credentialsId, gitApiUrl, context);
                 return FormValidation.ok("Success");
@@ -332,8 +338,10 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             }
         }
 
+        @RequirePOST
         public FormValidation doCheckRepo(@QueryParameter ("credentialsId") final String credentialsId,
                                           @QueryParameter ("repo") final String repo, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
+            context.checkPermission(Item.CONFIGURE);
             try {
                 getRepoIfValid(credentialsId, gitApiUrl, account, repo, context);
                 return FormValidation.ok("Success");
@@ -342,8 +350,10 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             }
         }
 
+        @RequirePOST
         public FormValidation doCheckSha(@QueryParameter ("credentialsId") final String credentialsId, @QueryParameter ("repo") final String repo,
                                          @QueryParameter ("sha") final String sha, @QueryParameter ("account") final String account, @QueryParameter ("gitApiUrl") final String gitApiUrl, @AncestorInPath Item context) {
+            context.checkPermission(Item.CONFIGURE);
             try {
                 getCommitIfValid(credentialsId, gitApiUrl, account, repo, sha, context);
                 return FormValidation.ok("Commit seems valid");
