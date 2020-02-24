@@ -194,6 +194,7 @@ public class GitHubNotificationPipelineStepTest {
         ));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
+        Thread.sleep(1000); // TODO pending workflow-job bump
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_COMMIT, b1);
     }
 
