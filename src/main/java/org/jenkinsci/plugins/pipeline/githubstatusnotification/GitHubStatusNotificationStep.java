@@ -380,12 +380,18 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         private transient Run run;
 
         @Override
-        protected Void run() throws Exception {
+        protected Void run() {
             String targetUrl = getTargetUrl();
             String credentialsId = getCredentialsId();
             String repo = getRepo();
             String account = getAccount();
-            GHRepository repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo, run.getParent());
+            GHRepository repository;
+            try {
+                repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo, run.getParent());
+            } catch (IOException x) {
+                listener.error("Could not check repository settings").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                return null;
+            }
             String sha1 = getSha1();
             GHCommit commit;
             try {
@@ -394,8 +400,13 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
                 listener.error(INVALID_COMMIT).print(Functions.printThrowable(ex)); // TODO Jenkins ~2.42+: Functions.printStackTrace
                 return null;
             }
-            repository.createCommitStatus(commit.getSHA1(),
+            try {
+                repository.createCommitStatus(commit.getSHA1(),
                     step.getStatus(), targetUrl, step.getDescription(), step.getContext());
+            } catch (IOException x) {
+                listener.error("Could not update commit status").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                return null;
+            }
             return null;
         }
 
