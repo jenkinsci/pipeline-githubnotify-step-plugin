@@ -136,7 +136,7 @@ public class GitHubNotificationPipelineStepTest {
     }
 
     @Test
-    public void buildWithWrongCommitMustFail() throws Exception {
+    public void buildWithWrongCommitMustWarn() throws Exception {
 
         GitHubBuilder ghb = PowerMockito.mock(GitHubBuilder.class);
         PowerMockito.when(ghb.withProxy(Matchers.<Proxy>anyObject())).thenReturn(ghb);
@@ -162,7 +162,7 @@ public class GitHubNotificationPipelineStepTest {
                         "status: 'SUCCESS', targetUrl: 'http://www.cloudbees.com'"
         ));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
-        jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
+        jenkins.assertBuildStatus(Result.SUCCESS, jenkins.waitForCompletion(b1));
         jenkins.assertLogContains(GitHubStatusNotificationStep.INVALID_COMMIT, b1);
     }
 
@@ -194,6 +194,7 @@ public class GitHubNotificationPipelineStepTest {
         ));
         WorkflowRun b1 = p.scheduleBuild2(0).waitForStart();
         jenkins.assertBuildStatus(Result.FAILURE, jenkins.waitForCompletion(b1));
+        Thread.sleep(1000); // TODO pending workflow-job bump
         jenkins.assertLogContains(GitHubStatusNotificationStep.Execution.UNABLE_TO_INFER_COMMIT, b1);
     }
 
