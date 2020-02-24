@@ -373,14 +373,11 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
         @Inject
         private transient GitHubStatusNotificationStep step;
 
-        @Inject
-        private transient TaskListener listener;
-
         @StepContextParameter
         private transient Run run;
 
         @Override
-        protected Void run() {
+        protected Void run() throws Exception {
             String targetUrl = getTargetUrl();
             String credentialsId = getCredentialsId();
             String repo = getRepo();
@@ -389,7 +386,7 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             try {
                 repository = getRepoIfValid(credentialsId, step.getGitApiUrl(), account, repo, run.getParent());
             } catch (IOException x) {
-                listener.error("Could not check repository settings").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                getContext().get(TaskListener.class).error("Could not check repository settings").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
                 return null;
             }
             String sha1 = getSha1();
@@ -397,14 +394,14 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
             try {
                 commit = repository.getCommit(sha1);
             } catch (IOException ex) {
-                listener.error(INVALID_COMMIT).print(Functions.printThrowable(ex)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                getContext().get(TaskListener.class).error(INVALID_COMMIT).print(Functions.printThrowable(ex)); // TODO Jenkins ~2.42+: Functions.printStackTrace
                 return null;
             }
             try {
                 repository.createCommitStatus(commit.getSHA1(),
                     step.getStatus(), targetUrl, step.getDescription(), step.getContext());
             } catch (IOException x) {
-                listener.error("Could not update commit status").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
+                getContext().get(TaskListener.class).error("Could not update commit status").print(Functions.printThrowable(x)); // TODO Jenkins ~2.42+: Functions.printStackTrace
                 return null;
             }
             return null;
