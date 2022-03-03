@@ -10,7 +10,7 @@
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>pipeline-githubnotify-step</artifactId>
-    <version>${revision}${changelist}</version>
+    <version>1.0.6</version>
 
     <packaging>hpi</packaging>
     <name>Pipeline GitHub Notify Step Plugin</name>
@@ -29,7 +29,7 @@
         <connection>scm:git:git://github.com/${gitHubRepo}.git</connection>
         <developerConnection>scm:git:git@github.com:${gitHubRepo}.git</developerConnection>
         <url>https://github.com/${gitHubRepo}</url>
-        <tag>${scmTag}</tag>
+        <tag>pipeline-githubnotify-step-1.0.6</tag>
     </scm>
 
     <licenses>
