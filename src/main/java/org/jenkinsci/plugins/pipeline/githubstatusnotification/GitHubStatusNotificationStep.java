@@ -147,7 +147,7 @@ public final class GitHubStatusNotificationStep extends AbstractStepImpl {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = String.format("%-140.140s", description).trim();
     }
 
     @DataBoundSetter
