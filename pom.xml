@@ -10,7 +10,7 @@
 
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>pipeline-githubnotify-step</artifactId>
-    <version>${revision}${changelist}</version>
+    <version>${changelist}</version>
 
     <packaging>hpi</packaging>
     <name>Pipeline GitHub Notify Step Plugin</name>
@@ -18,8 +18,7 @@
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
 
     <properties>
-        <revision>1.0.6</revision>
-        <changelist>-SNAPSHOT</changelist>
+        <changelist>999999-SNAPSHOT</changelist>
         <java.level>8</java.level>
         <jenkins.version>2.222.4</jenkins.version>
         <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
