@@ -1,3 +1,5 @@
+# PLEASE DO NOT USE THIS PLUGIN, USE https://github.com/jenkinsci/github-checks-plugin INSTEAD
+
 # Pipeline GitHub Notify Step Plugin
 
 This step allows a pipeline job to notify a status for any GitHub commit.
